@@ -300,13 +300,14 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
 .notice-bar { width:2px; background:var(--bleu); border-radius:1px; align-self:stretch; flex-shrink:0; }
 .notice p { font-size:12px; color:var(--gris-m); line-height:1.5; }
 </style>
+</style>
 </head>
 <body>
 
 <div class="ov" id="ov"><div class="ov-card" id="ov-card"><div class="spin"></div><h3>Transmission en cours</h3><p>Envoi vers Google Sheets…</p></div></div>
 <div class="toast" id="toast"></div>
 
-<!-- ── MODALE CARTE OSM ── -->
+<!-- MODALE CARTE OSM -->
 <div class="map-modal" id="map-modal">
   <div class="map-modal-head">
     <span class="map-modal-badge" id="map-modal-badge">#1</span>
@@ -315,11 +316,11 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
   </div>
   <div class="map-modal-hint">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    Touchez ou cliquez l'emplacement exact du piege pour poser un marqueur
+    Touchez ou cliquez l'emplacement exact du piège pour poser un marqueur
   </div>
   <div id="map-container"></div>
   <div class="map-modal-foot">
-    <span class="map-coords" id="map-coords-display">Aucun point selectionne</span>
+    <span class="map-coords" id="map-coords-display">Aucun point sélectionné</span>
     <button class="map-confirm" id="map-confirm-btn" onclick="confirmMapPoint()">Confirmer</button>
   </div>
 </div>
@@ -330,7 +331,7 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
     <div class="hdr-top">
       <div class="hdr-accent"></div>
       <div class="hdr-titles"><h1>Piégeage Frelon Asiatique</h1><p>Plan national — Pays de la Loire · 2026</p></div>
-      <div class="hdr-conn"><div class="conn-dot" id="conn-dot"></div><span id="conn-lbl">Non configuré</span></div>
+      <div class="hdr-conn"><div class="conn-dot on" id="conn-dot"></div><span id="conn-lbl">Connecté</span></div>
     </div>
     <nav class="prog" id="prog"></nav>
   </div>
@@ -338,9 +339,9 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
 
 <main>
 
-<!-- ── 0 · CONFIG ── -->
+<!-- 0 · CONFIG (masqué, URL codée en dur) -->
 <div class="panel active" id="panel-0">
-  <div class="setup-card" id="setup-card">
+  <div class="setup-card" id="setup-card" style="display:none">
     <h3>Configuration requise</h3>
     <p>Renseignez l'URL du script Apps Script fournie par le coordinateur régional.</p>
     <div class="f">
@@ -352,42 +353,30 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
       Enregistrer et continuer
     </button>
   </div>
-  <div class="card">
-    <div class="card-head">
-      <svg class="card-head-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      <span class="card-head-txt">Identifiant</span>
-      <div class="card-head-rule b"></div>
-    </div>
-    <div class="id-bar" style="margin:0">
-      <div><div class="id-lbl">Identifiant apiculteur</div><div class="id-val" id="uid-0">—</div></div>
-      <span class="id-edit" onclick="changeId()">Modifier</span>
-    </div>
-  </div>
 </div>
 
-<!-- ── 1 · LIEU + CONTACT ── -->
+<!-- 1 · LIEU + CONTACT -->
 <div class="panel" id="panel-1">
-  <div class="id-bar"><div><div class="id-lbl">Identifiant</div><div class="id-val" id="uid-1">—</div></div><span class="id-edit" onclick="changeId()">Modifier</span></div>
 
   <!-- Contact piégeur -->
   <div class="card">
     <div class="card-head">
       <svg class="card-head-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       <span class="card-head-txt">Contact piégeur</span>
-      <span style="margin-left:auto;font-size:10px;color:var(--gris-l)">optionnel</span>
+      <span style="margin-left:auto;font-size:11px;font-weight:700;color:var(--gris-l)">OPTIONNEL</span>
     </div>
     <div class="f f2">
       <div class="f" style="margin:0">
-        <label>Prénom <span class="opt">optionnel</span></label>
+        <label>Prénom</label>
         <input type="text" id="prenom" placeholder="Marie" autocomplete="given-name">
       </div>
       <div class="f" style="margin:0">
-        <label>Nom <span class="opt">optionnel</span></label>
+        <label>Nom</label>
         <input type="text" id="nom" placeholder="Dupont" autocomplete="family-name">
       </div>
     </div>
     <div class="f" style="margin-bottom:0">
-      <label>Téléphone <span class="opt">optionnel</span></label>
+      <label>Téléphone</label>
       <input type="tel" id="tel" placeholder="06 xx xx xx xx" autocomplete="tel">
     </div>
   </div>
@@ -402,17 +391,17 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
 
     <div class="f">
       <label>Adresse <span class="req">*</span></label>
-      <input type="text" id="adresse" placeholder="12 rue des Abeilles, 44600 Saint-Nazaire" autocomplete="street-address" oninput="updateOsmLink()">
+      <input type="text" id="adresse" placeholder="12 rue des Abeilles, 44600 Saint-Nazaire" autocomplete="street-address">
     </div>
 
     <div class="f f2">
       <div class="f" style="margin:0">
         <label>Commune <span class="req">*</span></label>
-        <input type="text" id="commune" placeholder="Saint-Nazaire" autocomplete="off" oninput="updateOsmLink()">
+        <input type="text" id="commune" placeholder="Saint-Nazaire" autocomplete="off">
       </div>
       <div class="f" style="margin:0">
         <label>Code postal</label>
-        <input type="text" id="cp" placeholder="44600" maxlength="5" inputmode="numeric" oninput="updateOsmLink()">
+        <input type="text" id="cp" placeholder="44600" maxlength="5" inputmode="numeric">
       </div>
     </div>
 
@@ -429,52 +418,22 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
       </select>
     </div>
 
-    <div class="f">
+    <div class="f" style="margin-bottom:0">
       <label>Lieu-dit / Précision</label>
       <input type="text" id="lieu" placeholder="Rucher nord, verger municipal…" autocomplete="off">
-    </div>
-
-    <div class="div"></div>
-
-    <!-- GPS — optionnel, clairement signalé -->
-    <div class="f" style="margin:0">
-      <label>
-        Coordonnées GPS
-        <span class="opt">optionnel — si disponible</span>
-      </label>
-      <div class="loc-row" style="margin-bottom:8px">
-        <div class="f"><input type="text" id="lat" placeholder="Latitude" inputmode="decimal" autocomplete="off" oninput="updateOsmLink()"></div>
-        <div class="f"><input type="text" id="lon" placeholder="Longitude" inputmode="decimal" autocomplete="off" oninput="updateOsmLink()"></div>
-        <button class="loc-btn" id="gps-btn" onclick="getGPS()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>
-          GPS
-        </button>
-      </div>
-      <div class="loc-msg" id="gps-msg"></div>
-      <div id="osm-link-container" style="display:none;margin-top:6px">
-        <a id="osm-link" class="osm-link" href="#" target="_blank" rel="noopener">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:3px"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Vérifier sur OpenStreetMap
-        </a>
-      </div>
     </div>
   </div>
 </div>
 
-<!-- ── 2 · PIÈGES ── -->
+<!-- 2 · PIÈGES + CAPTURES -->
 <div class="panel" id="panel-2">
-  <!-- Liste des pièges — dates et GPS intégrés dans chaque carte piège -->
   <div class="card">
     <div class="card-head">
       <svg class="card-head-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3l18 18M10.5 6A6.5 6.5 0 0117 12.5M6.5 10A6.5 6.5 0 0113 16.5M3 21l4-4"/></svg>
-      <span class="card-head-txt">Pièges</span>
+      <span class="card-head-txt">Pièges et captures</span>
       <div class="card-head-rule"></div>
     </div>
-
-    <div class="trap-list" id="trap-list">
-      <!-- dynamique -->
-    </div>
-
+    <div class="trap-list" id="trap-list"></div>
     <div style="margin-top:12px">
       <button class="add-trap-btn" onclick="addTrap()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -484,15 +443,8 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
   </div>
 </div>
 
-<!-- ── 3 · CAPTURES PAR PIÈGE ── -->
+<!-- 3 · ENVOI -->
 <div class="panel" id="panel-3">
-  <div id="captures-list">
-    <!-- dynamique — une carte par piège -->
-  </div>
-</div>
-
-<!-- ── 4 · ENVOI ── -->
-<div class="panel" id="panel-4">
   <div class="card">
     <div class="card-head">
       <svg class="card-head-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
@@ -501,7 +453,6 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
     </div>
     <div id="recap-content"></div>
   </div>
-
   <div class="card">
     <div class="card-head">
       <svg class="card-head-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -515,56 +466,48 @@ input[type=number] { font-family:var(--mono); font-weight:600; }
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       Envoyer le relevé
     </button>
-    <div class="notice"><div class="notice-bar"></div><p>Données transmises via l'identifiant apiculteur. Aucune donnée personnelle nominative n'est stockée sans consentement.</p></div>
+    <div class="notice"><div class="notice-bar"></div><p>Aucune donnée personnelle nominative n'est stockée sans consentement.</p></div>
   </div>
 </div>
 
 </main>
-
 <div class="bnav"><div class="bnav-inner" id="bnav"></div></div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzMFygnDWgiJa3FbLXaKGqJ3BPCr2EcxatgDkmtfHa86EahV-L1m9gL2FU-guNGTCptDA/exec';
-const ID_KEY     = 'frelon_uid';
-const STEPS      = ['Config.','Lieu','Pieges','Captures','Envoi'];
+const STEPS = ['Config.','Lieu','Pièges','Envoi'];
 let S = 0;
 
-// Modele pieges
 let traps = [], trapCounter = 0;
 const TRAP_TYPES = [
-  {value:'Osaka Select (japonais)',             short:'Osaka'},
-  {value:'VeluTrap BeeVital (coreen a ailes)',  short:'VeluTrap'},
-  {value:'Robida (nasse + grille Neoppi)',       short:'Robida'},
-  {value:'Autre selectif',                      short:'Autre'},
-  {value:'Non selectif',                        short:'N.sel'},
+  {value:'Osaka Select (japonais)',                                    short:'Osaka'},
+  {value:'VeluTrap BeeVital (coreen a ailes)',                         short:'VeluTrap'},
+  {value:'Robida (nasse + grille Neoppi)',                             short:'Robida'},
+  {value:'Autre selectif (Appat inaccessible aux insectes)',           short:'Autre sel.'},
+  {value:'Non selectif (Appat accessible aux insectes)',               short:'Non sel.'},
+];
+const APPATS = [
+  ['Sirop fruits rouges + biere + vin rouge','Sirop + bière + vin'],
+  ['Levure + sucre + eau','Levure + sucre + eau'],
+  ['Jus de pomme','Jus de pomme'],
+  ['Sirop de nourrissement','Sirop nourrissement'],
+  ['Autre','Autre'],
 ];
 
 // INIT
 window.addEventListener('DOMContentLoaded', () => {
-  let uid = localStorage.getItem(ID_KEY);
-  if (!uid) {
-    uid = (prompt('Identifiant apiculteur (numero NAPI, initiales ou code) :') || '').trim() || 'NON DEFINI';
-    localStorage.setItem(ID_KEY, uid);
-  }
-  syncUid();
-  setConn(true);
-  document.getElementById('setup-card').style.display = 'none';
-  document.getElementById('script-url').value = SCRIPT_URL;
   addTrap();
-  buildProg();
-  buildNav();
+  buildProg(); buildNav();
   goTo(1);
 });
 
-// PROGRESS
+// NAVIGATION
 function buildProg() {
   const el = document.getElementById('prog');
   el.innerHTML = '';
   STEPS.forEach((lbl, i) => {
-    const node = document.createElement('div');
-    node.className = 'prog-node';
+    const node = document.createElement('div'); node.className = 'prog-node';
     node.onclick = () => { if (i <= S) goTo(i); };
     const c = document.createElement('div');
     c.className = 'prog-circ' + (i===S?' cur': i<S?' done':'');
@@ -572,8 +515,7 @@ function buildProg() {
     const l = document.createElement('div');
     l.className = 'prog-lbl' + (i===S?' cur': i<S?' done':'');
     l.textContent = lbl;
-    node.append(c, l);
-    el.append(node);
+    node.append(c, l); el.append(node);
     if (i < STEPS.length-1) {
       const line = document.createElement('div');
       line.className = 'prog-line' + (i < S ? ' done' : '');
@@ -587,8 +529,8 @@ function buildNav() {
   const last = S === STEPS.length - 1;
   let h = '';
   if (S > 0) h += `<button class="btn btn-sec" onclick="goTo(${S-1})"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Retour</button>`;
-  if (!last)  h += `<button class="btn btn-pri" onclick="tryGo(${S+1})">Suivant <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>`;
-  if (last)   h += `<button class="btn btn-out" onclick="resetForm()">Nouvelle saisie</button>`;
+  if (!last) h += `<button class="btn btn-pri" onclick="tryGo(${S+1})">Suivant <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>`;
+  if (last)  h += `<button class="btn btn-out" onclick="resetForm()">Nouvelle saisie</button>`;
   nav.innerHTML = h;
 }
 
@@ -597,8 +539,7 @@ function goTo(n) {
   S = n;
   document.getElementById('panel-'+S).classList.add('active');
   buildProg(); buildNav();
-  if (n === 3) buildCaptureCards();
-  if (n === 4) buildRecap();
+  if (n === 3) buildRecap();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -612,139 +553,69 @@ function validate() {
     if (!c.value.trim()) { c.classList.add('err-field'); setTimeout(()=>c.classList.remove('err-field'),2500); toast('La commune est obligatoire.'); return false; }
   }
   if (S === 2) {
-    if (!traps.length) { toast('Ajoutez au moins un piege.'); return false; }
+    if (!traps.length) { toast('Ajoutez au moins un piège.'); return false; }
     for (const trap of traps) {
       const sel = document.getElementById('trap-type-'+trap.id);
-      if (!sel || !sel.value) {
-        sel && sel.classList.add('err-field');
-        setTimeout(()=>sel && sel.classList.remove('err-field'),2500);
-        toast('Selectionnez le type pour le Piege ' + trap.num + '.'); return false;
-      }
+      if (!sel || !sel.value) { sel&&sel.classList.add('err-field'); setTimeout(()=>sel&&sel.classList.remove('err-field'),2500); toast('Sélectionnez le type pour le Piège '+trap.num+'.'); return false; }
       const dr = document.getElementById('date-releve-'+trap.id);
-      if (!dr || !dr.value) {
-        dr && dr.classList.add('err-field');
-        setTimeout(()=>dr && dr.classList.remove('err-field'),2500);
-        toast('Date de retrait manquante pour le Piege ' + trap.num + '.'); return false;
-      }
+      if (!dr || !dr.value) { dr&&dr.classList.add('err-field'); setTimeout(()=>dr&&dr.classList.remove('err-field'),2500); toast('Date de retrait manquante pour le Piège '+trap.num+'.'); return false; }
     }
   }
   return true;
 }
 
-function setConn(on) {
-  document.getElementById('conn-dot').className = 'conn-dot'+(on?' on':'');
-  document.getElementById('conn-lbl').textContent = on ? 'Connecte' : 'Non configure';
-}
-
 function saveUrl() {
   const url = document.getElementById('script-url').value.trim();
   if (!url.startsWith('https://')) { toast('URL invalide'); return; }
-  document.getElementById('setup-card').style.display = 'none';
-  setConn(true); toast('URL enregistree.');
-  goTo(1);
+  toast('URL enregistrée.'); goTo(1);
 }
 
-function changeId() {
-  const uid = (prompt('Modifier l\'identifiant :', localStorage.getItem(ID_KEY)||'') || '').trim() || localStorage.getItem(ID_KEY);
-  localStorage.setItem(ID_KEY, uid); syncUid();
-}
-function syncUid() {
-  const uid = localStorage.getItem(ID_KEY) || '-';
-  ['uid-0','uid-1'].forEach(id => { const e=document.getElementById(id); if(e) e.textContent=uid; });
-}
-
-// GPS site
-function getGPS() {
-  const msg = document.getElementById('gps-msg');
-  const btn = document.getElementById('gps-btn');
-  if (!navigator.geolocation) { msg.className='loc-msg err'; msg.textContent='GPS non disponible.'; return; }
-  msg.className='loc-msg ok'; msg.textContent='Acquisition...';
-  btn.classList.add('active');
-  navigator.geolocation.getCurrentPosition(p => {
-    document.getElementById('lat').value = p.coords.latitude.toFixed(6);
-    document.getElementById('lon').value = p.coords.longitude.toFixed(6);
-    msg.className='loc-msg ok'; msg.textContent='Position acquise (+/-'+Math.round(p.coords.accuracy)+' m)';
-    btn.classList.remove('active');
-    updateOsmLink();
-  }, err => {
-    msg.className='loc-msg err'; msg.textContent='GPS indisponible - l\'adresse suffit.';
-    btn.classList.remove('active');
-  }, {enableHighAccuracy:true, timeout:12000});
-}
-
-function updateOsmLink() {
-  const lat = document.getElementById('lat').value.trim();
-  const lon = document.getElementById('lon').value.trim();
-  const addr = document.getElementById('adresse').value.trim();
-  const com  = document.getElementById('commune').value.trim();
-  const cp   = document.getElementById('cp').value.trim();
-  const cont = document.getElementById('osm-link-container');
-  const link = document.getElementById('osm-link');
-  if (lat && lon && !isNaN(parseFloat(lat)) && !isNaN(parseFloat(lon))) {
-    link.href = 'https://www.openstreetmap.org/?mlat='+lat+'&mlon='+lon+'&zoom=17';
-    cont.style.display = 'block';
-  } else if (addr || com) {
-    link.href = 'https://www.openstreetmap.org/search?query='+encodeURIComponent([addr,cp,com].filter(Boolean).join(', '));
-    cont.style.display = 'block';
-  } else { cont.style.display = 'none'; }
-}
-
-// GESTION PIEGES
-function trapShortName(type) {
-  const f = TRAP_TYPES.find(t => t.value === type);
-  return f ? f.short : (type || 'Piege');
-}
+// PIÈGES
+function trapShortName(type) { const f=TRAP_TYPES.find(t=>t.value===type); return f?f.short:(type||'Piège'); }
 
 function addTrap() {
   trapCounter++;
-  const id = trapCounter, num = traps.length + 1;
-  const today = new Date().toISOString().slice(0,10);
-  traps.push({id, num, type:'', rucher:'Non', appat:[], dateInstall:today, dateReleve:today, lat:'', lon:'', osmLink:'', asian:0, euro:0, others:0, nid:'Non', notes:''});
+  const id=trapCounter, num=traps.length+1;
+  const today=new Date().toISOString().slice(0,10);
+  traps.push({id, num, type:'', rucher:'Non', appat:[], dateInstall:today, dateReleve:today, lat:'', lon:'', osmLink:'', asian:0, euro:0, others:0, notes:''});
   renderTrapList();
 }
 
 function removeTrap(id) {
-  traps = traps.filter(t => t.id !== id);
-  traps.forEach((t,i) => t.num = i+1);
+  traps=traps.filter(t=>t.id!==id);
+  traps.forEach((t,i)=>t.num=i+1);
   renderTrapList();
 }
 
 function renderTrapList() {
-  const list = document.getElementById('trap-list');
-  if (!traps.length) {
-    list.innerHTML = '<p style="font-size:13px;color:var(--gris-l);text-align:center;padding:12px 0">Aucun piege. Cliquez sur Ajouter un piege.</p>';
-    return;
-  }
-  const APPATS = [
-    ['Sirop fruits rouges + biere + vin rouge','Sirop + biere + vin'],
-    ['Levure + sucre + eau','Levure + sucre + eau'],
-    ['Jus de pomme','Jus de pomme'],
-    ['Sirop de nourrissement','Sirop nourrissement'],
-    ['Autre','Autre'],
-  ];
-  list.innerHTML = traps.map(trap => {
-    const tv = trap.type;
-    const sn = tv ? trapShortName(tv)+' #'+trap.num : 'Piege '+trap.num;
-    const ac = v => trap.appat.includes(v) ? 'checked' : '';
-    const rc = v => trap.rucher === v ? 'checked' : '';
-    const hasGPS = trap.lat && trap.lon;
+  const list=document.getElementById('trap-list');
+  if (!traps.length) { list.innerHTML='<p style="font-size:13px;color:var(--gris-l);text-align:center;padding:12px 0">Aucun piège. Cliquez sur Ajouter un piège.</p>'; return; }
+  list.innerHTML=traps.map(trap=>{
+    const tv=trap.type;
+    const sn=tv?trapShortName(tv)+' #'+trap.num:'Piège '+trap.num;
+    const ac=v=>trap.appat.includes(v)?'checked':'';
+    const rc=v=>trap.rucher===v?'checked':'';
+    const hasGPS=trap.lat&&trap.lon;
     return `<div class="trap-card" id="trap-card-${trap.id}">
       <div class="trap-card-head">
         <span class="trap-badge">#${trap.num}</span>
         <span class="trap-name">${sn}</span>
-        ${traps.length > 1 ? `<button class="trap-remove" onclick="removeTrap(${trap.id})">&#xD7;</button>` : ''}
+        ${traps.length>1?`<button class="trap-remove" onclick="removeTrap(${trap.id})">&#xD7;</button>`:''}
       </div>
       <div class="trap-body">
         <div class="f">
-          <label>Type de piege <span class="req">*</span></label>
+          <label>Type de piège <span class="req">*</span></label>
           <select id="trap-type-${trap.id}" onchange="updateTrapType(${trap.id},this.value)">
             <option value="">-- Choisir --</option>
-            <optgroup label="Selectifs recommandes">
+            <optgroup label="Sélectifs recommandés">
               <option value="Osaka Select (japonais)" ${tv==='Osaka Select (japonais)'?'selected':''}>Osaka Select - japonais</option>
-              <option value="VeluTrap BeeVital (coreen a ailes)" ${tv==='VeluTrap BeeVital (coreen a ailes)'?'selected':''}>VeluTrap BeeVital - coreen a ailes</option>
-              <option value="Robida (nasse + grille Neoppi)" ${tv==='Robida (nasse + grille Neoppi)'?'selected':''}>Robida - nasse et grille Neoppi</option>
+              <option value="VeluTrap BeeVital (coreen a ailes)" ${tv==='VeluTrap BeeVital (coreen a ailes)'?'selected':''}>VeluTrap BeeVital - coréen à ailes</option>
+              <option value="Robida (nasse + grille Neoppi)" ${tv==='Robida (nasse + grille Neoppi)'?'selected':''}>Robida - nasse et grille Néoppi</option>
             </optgroup>
-            <optgroup label="Autre"><option value="Autre selectif" ${tv==='Autre selectif'?'selected':''}>Autre selectif</option><option value="Non selectif" ${tv==='Non selectif'?'selected':''}>Non selectif</option></optgroup>
+            <optgroup label="Autre">
+              <option value="Autre selectif (Appat inaccessible aux insectes)" ${tv==='Autre selectif (Appat inaccessible aux insectes)'?'selected':''}>Autre sélectif (Appât inaccessible aux insectes)</option>
+              <option value="Non selectif (Appat accessible aux insectes)" ${tv==='Non selectif (Appat accessible aux insectes)'?'selected':''}>Non sélectif (Appât accessible aux insectes)</option>
+            </optgroup>
           </select>
         </div>
         <div class="f f2">
@@ -753,19 +624,61 @@ function renderTrapList() {
           <div class="f" style="margin:0"><label>Date de retrait <span class="req">*</span></label>
             <input type="date" id="date-releve-${trap.id}" value="${trap.dateReleve}" onchange="updateTrapField(${trap.id},'dateReleve',this.value)"></div>
         </div>
-        <div class="f">
-          <label>Localisation GPS <span class="opt">optionnel</span></label>
-          <div class="loc-row" style="margin-bottom:6px">
-            <div class="f"><input type="text" id="trap-lat-${trap.id}" value="${trap.lat}" placeholder="Latitude" inputmode="decimal" autocomplete="off" oninput="updateTrapField(${trap.id},'lat',this.value);updateTrapOsmLink(${trap.id})"></div>
-            <div class="f"><input type="text" id="trap-lon-${trap.id}" value="${trap.lon}" placeholder="Longitude" inputmode="decimal" autocomplete="off" oninput="updateTrapField(${trap.id},'lon',this.value);updateTrapOsmLink(${trap.id})"></div>
+
+        <!-- CAPTURES intégrées dans la carte piège -->
+        <div class="div"></div>
+        <div style="margin-bottom:10px">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gris-m);margin-bottom:10px">Captures</div>
+          <div class="ctrs">
+            <div class="ctr cv">
+              <div class="ctr-lbl">Frelon asiatique</div>
+              <div class="ctr-sp">Vespa velutina</div>
+              <div class="ctr-ctrl">
+                <button class="cbtn" onclick="ctr(${trap.id},'asian',-1)">-</button>
+                <input class="cval" type="number" id="asian-${trap.id}" value="${trap.asian}" min="0" inputmode="numeric" onchange="updateTrapCount(${trap.id},'asian',this.value)">
+                <button class="cbtn" onclick="ctr(${trap.id},'asian',1)">+</button>
+              </div>
+            </div>
+            <div class="ctr cb">
+              <div class="ctr-lbl">Frelon européen</div>
+              <div class="ctr-sp">Vespa crabro</div>
+              <div class="ctr-ctrl">
+                <button class="cbtn" onclick="ctr(${trap.id},'euro',-1)">-</button>
+                <input class="cval" type="number" id="euro-${trap.id}" value="${trap.euro}" min="0" inputmode="numeric" onchange="updateTrapCount(${trap.id},'euro',this.value)">
+                <button class="cbtn" onclick="ctr(${trap.id},'euro',1)">+</button>
+              </div>
+            </div>
+            <div class="ctr cg">
+              <div class="ctr-lbl">Autres insectes</div>
+              <div class="ctr-sp">Mouches, guêpes…</div>
+              <div class="ctr-ctrl">
+                <button class="cbtn" onclick="ctr(${trap.id},'others',-1)">-</button>
+                <input class="cval" type="number" id="others-${trap.id}" value="${trap.others}" min="0" inputmode="numeric" onchange="updateTrapCount(${trap.id},'others',this.value)">
+                <button class="cbtn" onclick="ctr(${trap.id},'others',1)">+</button>
+              </div>
+            </div>
           </div>
-          <div style="display:flex;gap:7px;margin-bottom:6px">
+        </div>
+
+        <div class="div"></div>
+
+        <!-- GPS optionnel -->
+        <div class="f" style="margin-bottom:8px">
+          <label style="display:flex;align-items:baseline;gap:6px">
+            Localisation précise du piège
+            <span style="font-size:13px;font-weight:700;color:var(--gris-l)">OPTIONNEL</span>
+          </label>
+          <p style="font-size:12px;color:var(--gris-m);margin-bottom:10px;line-height:1.5">
+            Si vous souhaitez enregistrer la position exacte du piège, deux possibilités :
+          </p>
+          <div style="display:flex;gap:7px;margin-bottom:8px">
             <button class="loc-btn" id="trap-gps-btn-${trap.id}" onclick="getTrapGPS(${trap.id})" style="flex:1;justify-content:center">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg> GPS auto
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>
+              Me localiser automatiquement
             </button>
             <button class="map-btn ${hasGPS?'set':''}" id="trap-map-btn-${trap.id}" onclick="openMapModal(${trap.id})">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-              ${hasGPS?'Modifier sur carte':'Choisir sur carte'}
+              Choisir un point sur la carte
             </button>
           </div>
           <div class="loc-msg" id="trap-gps-msg-${trap.id}"></div>
@@ -775,105 +688,112 @@ function renderTrapList() {
               Voir sur OpenStreetMap
             </a>
           </div>
+          <div class="loc-row" style="margin-top:8px;display:${hasGPS?'flex':'none'}" id="trap-coords-row-${trap.id}">
+            <div class="f"><input type="text" id="trap-lat-${trap.id}" value="${trap.lat}" placeholder="Latitude" inputmode="decimal" autocomplete="off" oninput="updateTrapField(${trap.id},'lat',this.value);updateTrapOsmLink(${trap.id})"></div>
+            <div class="f"><input type="text" id="trap-lon-${trap.id}" value="${trap.lon}" placeholder="Longitude" inputmode="decimal" autocomplete="off" oninput="updateTrapField(${trap.id},'lon',this.value);updateTrapOsmLink(${trap.id})"></div>
+          </div>
         </div>
+
         <div class="f" style="margin-bottom:0"><label>Sur rucher</label>
           <div class="pills">
             <label class="pill"><input type="radio" name="rucher-${trap.id}" value="Non" ${rc('Non')} onchange="updateTrapField(${trap.id},'rucher','Non')"> Non</label>
             <label class="pill"><input type="radio" name="rucher-${trap.id}" value="Oui" ${rc('Oui')} onchange="updateTrapField(${trap.id},'rucher','Oui')"> Oui, sur rucher</label>
           </div>
         </div>
-        <div class="f" style="margin-bottom:0;margin-top:14px"><label>Appat(s)</label>
+        <div class="f" style="margin-bottom:0;margin-top:14px"><label>Appât(s) utilisé(s)</label>
           <div class="pills">
             ${APPATS.map(([v,l])=>`<label class="pill"><input type="checkbox" name="appat-${trap.id}" value="${v}" ${ac(v)} onchange="updateTrapAppat(${trap.id})"> ${l}</label>`).join('')}
           </div>
+        </div>
+        <div class="f" style="margin-bottom:0;margin-top:14px"><label>Notes <span style="font-size:11px;font-weight:700;color:var(--gris-l)">OPTIONNEL</span></label>
+          <textarea id="notes-${trap.id}" placeholder="Conditions, observations particulières…" onchange="updateTrapField(${trap.id},'notes',this.value)">${trap.notes}</textarea>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function updateTrapType(id, value) {
-  const trap = traps.find(t=>t.id===id); if(!trap) return;
-  trap.type = value;
-  const el = document.querySelector('#trap-card-'+id+' .trap-name');
-  if (el) el.textContent = value ? trapShortName(value)+' #'+trap.num : 'Piege '+trap.num;
+function updateTrapType(id,value){
+  const trap=traps.find(t=>t.id===id); if(!trap) return;
+  trap.type=value;
+  const el=document.querySelector('#trap-card-'+id+' .trap-name');
+  if(el) el.textContent=value?trapShortName(value)+' #'+trap.num:'Piège '+trap.num;
 }
-function updateTrapField(id, field, value) { const t=traps.find(t=>t.id===id); if(t) t[field]=value; }
-function updateTrapAppat(id) { const t=traps.find(t=>t.id===id); if(t) t.appat=[...document.querySelectorAll('input[name="appat-'+id+'"]:checked')].map(e=>e.value); }
+function updateTrapField(id,field,value){const t=traps.find(t=>t.id===id);if(t)t[field]=value;}
+function updateTrapAppat(id){const t=traps.find(t=>t.id===id);if(t)t.appat=[...document.querySelectorAll('input[name="appat-'+id+'"]:checked')].map(e=>e.value);}
 
-// GPS par piege
-function getTrapGPS(id) {
-  const msg = document.getElementById('trap-gps-msg-'+id);
-  const btn = document.getElementById('trap-gps-btn-'+id);
-  const trap = traps.find(t=>t.id===id);
-  if (!navigator.geolocation) { msg.className='loc-msg err'; msg.textContent='GPS non disponible.'; return; }
-  msg.className='loc-msg ok'; msg.textContent='Acquisition...'; btn&&btn.classList.add('active');
-  navigator.geolocation.getCurrentPosition(p => {
-    const lat=p.coords.latitude.toFixed(6), lon=p.coords.longitude.toFixed(6);
-    document.getElementById('trap-lat-'+id).value=lat;
-    document.getElementById('trap-lon-'+id).value=lon;
+function ctr(trapId,field,delta){
+  const el=document.getElementById(field+'-'+trapId);
+  const v=Math.max(0,(parseInt(el.value)||0)+delta);
+  el.value=v; updateTrapCount(trapId,field,v);
+}
+function updateTrapCount(id,field,value){const t=traps.find(t=>t.id===id);if(t)t[field]=parseInt(value)||0;}
+
+// LOCALISATION PAR PIÈGE
+function getTrapGPS(id){
+  const msg=document.getElementById('trap-gps-msg-'+id);
+  const btn=document.getElementById('trap-gps-btn-'+id);
+  const trap=traps.find(t=>t.id===id);
+  if(!navigator.geolocation){msg.className='loc-msg err';msg.textContent='Localisation non disponible sur cet appareil.';return;}
+  msg.className='loc-msg ok';msg.textContent='Localisation en cours…';btn&&btn.classList.add('active');
+  navigator.geolocation.getCurrentPosition(p=>{
+    const lat=p.coords.latitude.toFixed(6),lon=p.coords.longitude.toFixed(6);
     if(trap){trap.lat=lat;trap.lon=lon;}
-    msg.className='loc-msg ok'; msg.textContent='Position acquise (+/-'+Math.round(p.coords.accuracy)+' m)';
+    const lr=document.getElementById('trap-coords-row-'+id);
+    if(lr) lr.style.display='flex';
+    const le=document.getElementById('trap-lat-'+id),lo=document.getElementById('trap-lon-'+id);
+    if(le)le.value=lat; if(lo)lo.value=lon;
+    msg.className='loc-msg ok';msg.textContent='Position enregistrée (+/- '+Math.round(p.coords.accuracy)+' m)';
     btn&&btn.classList.remove('active');
     updateTrapOsmLink(id);
-  }, () => { msg.className='loc-msg err'; msg.textContent='GPS indisponible.'; btn&&btn.classList.remove('active'); },
+  },()=>{msg.className='loc-msg err';msg.textContent='Localisation impossible. Essayez "Choisir un point sur la carte".';btn&&btn.classList.remove('active');},
   {enableHighAccuracy:true,timeout:12000});
 }
 
-function updateTrapOsmLink(id) {
-  const trap = traps.find(t=>t.id===id);
-  const lat = (document.getElementById('trap-lat-'+id)?.value||'').trim();
-  const lon = (document.getElementById('trap-lon-'+id)?.value||'').trim();
-  const cont = document.getElementById('trap-osm-'+id);
-  const link = cont?.querySelector('a');
-  if (!cont||!link) return;
-  if (lat&&lon&&!isNaN(parseFloat(lat))&&!isNaN(parseFloat(lon))) {
+function updateTrapOsmLink(id){
+  const trap=traps.find(t=>t.id===id);
+  const lat=(document.getElementById('trap-lat-'+id)?.value||'').trim();
+  const lon=(document.getElementById('trap-lon-'+id)?.value||'').trim();
+  const cont=document.getElementById('trap-osm-'+id);
+  const link=cont?.querySelector('a');
+  if(!cont||!link)return;
+  if(lat&&lon&&!isNaN(parseFloat(lat))&&!isNaN(parseFloat(lon))){
     const href='https://www.openstreetmap.org/?mlat='+lat+'&mlon='+lon+'&zoom=17';
-    link.href=href; if(trap) trap.osmLink=href; cont.style.display='block';
-  } else {
-    const addr=document.getElementById('adresse')?.value.trim()||'';
-    const com=document.getElementById('commune')?.value.trim()||'';
-    const cp=document.getElementById('cp')?.value.trim()||'';
-    if(addr||com){const href='https://www.openstreetmap.org/search?query='+encodeURIComponent([addr,cp,com].filter(Boolean).join(', '));link.href=href;if(trap)trap.osmLink=href;cont.style.display='block';}
-    else{if(trap)trap.osmLink='';cont.style.display='none';}
-  }
+    link.href=href;if(trap)trap.osmLink=href;cont.style.display='block';
+  }else{if(trap)trap.osmLink='';cont.style.display='none';}
 }
 
-// MODALE CARTE LEAFLET
-let mapInstance=null, mapMarker=null, mapTrapId=null, mapPendingLat=null, mapPendingLon=null;
+// MODALE CARTE
+let mapInstance=null,mapMarker=null,mapTrapId=null,mapPendingLat=null,mapPendingLon=null;
 
-function openMapModal(trapId) {
-  mapTrapId=trapId; mapPendingLat=null; mapPendingLon=null;
+function openMapModal(trapId){
+  mapTrapId=trapId;mapPendingLat=null;mapPendingLon=null;
   const trap=traps.find(t=>t.id===trapId);
   document.getElementById('map-modal-badge').textContent='#'+trap.num;
-  document.getElementById('map-coords-display').textContent='Aucun point selectionne';
+  document.getElementById('map-coords-display').textContent='Aucun point sélectionné';
   document.getElementById('map-coords-display').className='map-coords';
   document.getElementById('map-confirm-btn').className='map-confirm';
   document.getElementById('map-modal').classList.add('on');
   let clat=47.48,clon=-0.55,zoom=9;
   if(trap.lat&&trap.lon){clat=parseFloat(trap.lat);clon=parseFloat(trap.lon);zoom=17;}
-  else{const sl=document.getElementById('lat')?.value.trim(),slo=document.getElementById('lon')?.value.trim();if(sl&&slo){clat=parseFloat(sl);clon=parseFloat(slo);zoom=15;}}
-  const pinSVG = `<svg width="28" height="40" viewBox="0 0 28 40" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.27 0 0 6.27 0 14c0 9.75 14 26 14 26S28 23.75 28 14C28 6.27 21.73 0 14 0z" fill="#A12885" stroke="#fff" stroke-width="1.5"/><circle cx="14" cy="14" r="5" fill="#fff"/></svg>`;
-  const makeIcon = () => L.divIcon({className:'',html:pinSVG,iconSize:[28,40],iconAnchor:[14,40]});
-  if (!mapInstance) {
+  const pinSVG=`<svg width="28" height="40" viewBox="0 0 28 40" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.27 0 0 6.27 0 14c0 9.75 14 26 14 26S28 23.75 28 14C28 6.27 21.73 0 14 0z" fill="#A12885" stroke="#fff" stroke-width="1.5"/><circle cx="14" cy="14" r="5" fill="#fff"/></svg>`;
+  const makeIcon=()=>L.divIcon({className:'',html:pinSVG,iconSize:[28,40],iconAnchor:[14,40]});
+  if(!mapInstance){
     mapInstance=L.map('map-container',{zoomControl:true,tap:true});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors',maxZoom:19}).addTo(mapInstance);
-    mapInstance.on('click', e=>{
-      if(mapMarker) mapInstance.removeLayer(mapMarker);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(mapInstance);
+    mapInstance.on('click',e=>{
+      if(mapMarker)mapInstance.removeLayer(mapMarker);
       mapMarker=L.marker([e.latlng.lat,e.latlng.lng],{icon:makeIcon()}).addTo(mapInstance);
-      mapPendingLat=e.latlng.lat; mapPendingLon=e.latlng.lng;
+      mapPendingLat=e.latlng.lat;mapPendingLon=e.latlng.lng;
       document.getElementById('map-coords-display').textContent=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6);
       document.getElementById('map-coords-display').className='map-coords set';
       document.getElementById('map-confirm-btn').className='map-confirm ready';
     });
-  } else {
-    if(mapMarker){mapInstance.removeLayer(mapMarker);mapMarker=null;}
-    mapInstance.invalidateSize();
-  }
+  }else{if(mapMarker){mapInstance.removeLayer(mapMarker);mapMarker=null;}mapInstance.invalidateSize();}
   mapInstance.setView([clat,clon],zoom);
   if(trap.lat&&trap.lon){
     mapMarker=L.marker([parseFloat(trap.lat),parseFloat(trap.lon)],{icon:makeIcon()}).addTo(mapInstance);
-    mapPendingLat=parseFloat(trap.lat); mapPendingLon=parseFloat(trap.lon);
+    mapPendingLat=parseFloat(trap.lat);mapPendingLon=parseFloat(trap.lon);
     document.getElementById('map-coords-display').textContent=trap.lat+', '+trap.lon;
     document.getElementById('map-coords-display').className='map-coords set';
     document.getElementById('map-confirm-btn').className='map-confirm ready';
@@ -881,128 +801,76 @@ function openMapModal(trapId) {
   setTimeout(()=>mapInstance.invalidateSize(),150);
 }
 
-function confirmMapPoint() {
-  if(mapPendingLat===null||mapTrapId===null) return;
-  const trap=traps.find(t=>t.id===mapTrapId); if(!trap) return;
-  const lat=mapPendingLat.toFixed(6), lon=mapPendingLon.toFixed(6);
-  trap.lat=lat; trap.lon=lon;
-  const le=document.getElementById('trap-lat-'+mapTrapId), lo=document.getElementById('trap-lon-'+mapTrapId);
-  if(le) le.value=lat; if(lo) lo.value=lon;
+function confirmMapPoint(){
+  if(mapPendingLat===null||mapTrapId===null)return;
+  const trap=traps.find(t=>t.id===mapTrapId);if(!trap)return;
+  const lat=mapPendingLat.toFixed(6),lon=mapPendingLon.toFixed(6);
+  trap.lat=lat;trap.lon=lon;
+  const lr=document.getElementById('trap-coords-row-'+mapTrapId);if(lr)lr.style.display='flex';
+  const le=document.getElementById('trap-lat-'+mapTrapId),lo=document.getElementById('trap-lon-'+mapTrapId);
+  if(le)le.value=lat;if(lo)lo.value=lon;
   updateTrapOsmLink(mapTrapId);
   const mb=document.getElementById('trap-map-btn-'+mapTrapId);
-  if(mb){mb.className='map-btn set';mb.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg> Modifier sur carte';}
+  if(mb){mb.className='map-btn set';mb.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg> Choisir un point sur la carte';}
   const gm=document.getElementById('trap-gps-msg-'+mapTrapId);
-  if(gm){gm.className='loc-msg ok';gm.textContent='Position placee sur carte : '+parseFloat(lat).toFixed(5)+', '+parseFloat(lon).toFixed(5);}
+  if(gm){gm.className='loc-msg ok';gm.textContent='Position placée sur la carte : '+parseFloat(lat).toFixed(5)+', '+parseFloat(lon).toFixed(5);}
   closeMapModal();
-  toast('Piege '+trap.num+' localise');
+  toast('Position du piège '+trap.num+' enregistrée');
 }
 
-function closeMapModal() { document.getElementById('map-modal').classList.remove('on'); mapTrapId=null; }
+function closeMapModal(){document.getElementById('map-modal').classList.remove('on');mapTrapId=null;}
 
-// CARTES CAPTURES
-function buildCaptureCards() {
+// SYNC DONNÉES AVANT RECAP
+function syncTraps(){
   traps.forEach(trap=>{
+    const s=document.getElementById('trap-type-'+trap.id);if(s)trap.type=s.value;
+    const r=document.querySelector('input[name="rucher-'+trap.id+'"]:checked');if(r)trap.rucher=r.value;
+    const di=document.getElementById('date-install-'+trap.id);if(di)trap.dateInstall=di.value;
+    const dr=document.getElementById('date-releve-'+trap.id);if(dr)trap.dateReleve=dr.value;
+    const la=document.getElementById('trap-lat-'+trap.id);if(la)trap.lat=la.value.trim();
+    const lo=document.getElementById('trap-lon-'+trap.id);if(lo)trap.lon=lo.value.trim();
     trap.appat=[...document.querySelectorAll('input[name="appat-'+trap.id+'"]:checked')].map(e=>e.value);
-    const s=document.getElementById('trap-type-'+trap.id); if(s) trap.type=s.value;
-    const r=document.querySelector('input[name="rucher-'+trap.id+'"]:checked'); if(r) trap.rucher=r.value;
-    const di=document.getElementById('date-install-'+trap.id); if(di) trap.dateInstall=di.value;
-    const dr=document.getElementById('date-releve-'+trap.id); if(dr) trap.dateReleve=dr.value;
-    const la=document.getElementById('trap-lat-'+trap.id); if(la) trap.lat=la.value.trim();
-    const lo=document.getElementById('trap-lon-'+trap.id); if(lo) trap.lon=lo.value.trim();
-  });
-  const list=document.getElementById('captures-list');
-  list.innerHTML=traps.map(trap=>{
-    const name=trap.type?trapShortName(trap.type)+' #'+trap.num:'Piege '+trap.num;
-    const nidOpts=[['Non','Non'],['Oui - a detruire','Oui - a detruire'],['Signale a la mairie','Signale a la mairie'],['Detruit','Detruit']];
-    return `<div class="card">
-      <div class="card-head">
-        <span class="trap-badge" style="font-family:var(--mono);font-size:10px;font-weight:700;color:#fff;background:var(--violet);padding:2px 8px;border-radius:4px;flex-shrink:0">#${trap.num}</span>
-        <span class="card-head-txt" style="font-size:12px;font-weight:700;color:var(--gris-f)">${name}</span>
-        <div class="card-head-rule"></div>
-      </div>
-      <div class="ctrs" style="margin-bottom:16px">
-        <div class="ctr cv"><div class="ctr-lbl">V. velutina</div><div class="ctr-sp">Frelon asiatique</div>
-          <div class="ctr-ctrl"><button class="cbtn" onclick="ctr(${trap.id},'asian',-1)">-</button>
-            <input class="cval" type="number" id="asian-${trap.id}" value="${trap.asian}" min="0" inputmode="numeric" onchange="updateTrapCount(${trap.id},'asian',this.value)">
-            <button class="cbtn" onclick="ctr(${trap.id},'asian',1)">+</button></div></div>
-        <div class="ctr cb"><div class="ctr-lbl">V. crabro</div><div class="ctr-sp">Frelon europeen</div>
-          <div class="ctr-ctrl"><button class="cbtn" onclick="ctr(${trap.id},'euro',-1)">-</button>
-            <input class="cval" type="number" id="euro-${trap.id}" value="${trap.euro}" min="0" inputmode="numeric" onchange="updateTrapCount(${trap.id},'euro',this.value)">
-            <button class="cbtn" onclick="ctr(${trap.id},'euro',1)">+</button></div></div>
-        <div class="ctr cg"><div class="ctr-lbl">Autres</div><div class="ctr-sp">Mouches, guepes...</div>
-          <div class="ctr-ctrl"><button class="cbtn" onclick="ctr(${trap.id},'others',-1)">-</button>
-            <input class="cval" type="number" id="others-${trap.id}" value="${trap.others}" min="0" inputmode="numeric" onchange="updateTrapCount(${trap.id},'others',this.value)">
-            <button class="cbtn" onclick="ctr(${trap.id},'others',1)">+</button></div></div>
-      </div>
-      <div class="f"><label>Nid primaire repere</label>
-        <div class="pills">${nidOpts.map(([v,l])=>`<label class="pill"><input type="radio" name="nid-${trap.id}" value="${v}" ${trap.nid===v?'checked':''} onchange="updateTrapField(${trap.id},'nid','${v}')"> ${l}</label>`).join('')}</div>
-      </div>
-      <div class="f" style="margin-bottom:0"><label>Notes <span class="opt">optionnel</span></label>
-        <textarea id="notes-${trap.id}" placeholder="Conditions, observations..." onchange="updateTrapField(${trap.id},'notes',this.value)">${trap.notes}</textarea>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function ctr(trapId, field, delta) {
-  const el=document.getElementById(field+'-'+trapId);
-  const v=Math.max(0,(parseInt(el.value)||0)+delta);
-  el.value=v; updateTrapCount(trapId,field,v);
-}
-function updateTrapCount(id,field,value){const t=traps.find(t=>t.id===id);if(t)t[field]=parseInt(value)||0;}
-
-function syncCaptures() {
-  traps.forEach(trap=>{
-    const a=document.getElementById('asian-'+trap.id); if(a) trap.asian=parseInt(a.value)||0;
-    const e=document.getElementById('euro-'+trap.id);  if(e) trap.euro=parseInt(e.value)||0;
-    const o=document.getElementById('others-'+trap.id);if(o) trap.others=parseInt(o.value)||0;
-    const n=document.querySelector('input[name="nid-'+trap.id+'"]:checked'); if(n) trap.nid=n.value;
-    const nt=document.getElementById('notes-'+trap.id); if(nt) trap.notes=nt.value;
+    const a=document.getElementById('asian-'+trap.id);if(a)trap.asian=parseInt(a.value)||0;
+    const e=document.getElementById('euro-'+trap.id);if(e)trap.euro=parseInt(e.value)||0;
+    const o=document.getElementById('others-'+trap.id);if(o)trap.others=parseInt(o.value)||0;
+    const nt=document.getElementById('notes-'+trap.id);if(nt)trap.notes=nt.value;
   });
 }
 
 // RECAP
-function buildRecap() {
-  syncCaptures();
-  const loc=[document.getElementById('adresse').value.trim(),document.getElementById('commune').value.trim(),document.getElementById('cp').value.trim()].filter(Boolean).join(' - ');
+function buildRecap(){
+  syncTraps();
+  const loc=[document.getElementById('adresse').value.trim(),document.getElementById('commune').value.trim(),document.getElementById('cp').value.trim()].filter(Boolean).join(' — ');
   const dept=document.getElementById('dept').value;
   const lieu=document.getElementById('lieu').value.trim();
   const prenom=document.getElementById('prenom').value.trim();
   const nom=document.getElementById('nom').value.trim();
   const tel=document.getElementById('tel').value.trim();
-  const uid=localStorage.getItem(ID_KEY)||'-';
-  const contact=[prenom,nom].filter(Boolean).join(' ')+(tel?' - '+tel:'');
-  const osmUrl=document.getElementById('osm-link').href;
-  const showOsm=document.getElementById('osm-link-container').style.display!=='none';
-
+  const contact=[prenom,nom].filter(Boolean).join(' ')+(tel?' — '+tel:'');
   let html=`<div class="recap-loc" style="margin-bottom:12px">
     <div class="recap-loc-head">Localisation du site</div>
     <div class="recap-grid">
       <div class="ri ab full"><div class="ri-l">Adresse</div><div class="ri-v">${loc||'-'}</div></div>
-      ${dept?`<div class="ri ab"><div class="ri-l">Departement</div><div class="ri-v">${dept}</div></div>`:''}
+      ${dept?`<div class="ri ab"><div class="ri-l">Département</div><div class="ri-v">${dept}</div></div>`:''}
       ${lieu?`<div class="ri"><div class="ri-l">Lieu-dit</div><div class="ri-v">${lieu}</div></div>`:''}
-      ${showOsm?`<div class="ri full"><div class="ri-l">Carte</div><div class="ri-v"><a href="${osmUrl}" target="_blank" class="osm-link">Voir sur OpenStreetMap</a></div></div>`:''}
-      ${contact?`<div class="ri full"><div class="ri-l">Contact piegeur</div><div class="ri-v">${contact}</div></div>`:''}
+      ${contact?`<div class="ri full"><div class="ri-l">Contact piégeur</div><div class="ri-v">${contact}</div></div>`:''}
     </div>
-  </div>
-  <div class="recap"><div class="ri ab" style="border-radius:var(--r);padding:8px 12px;background:var(--gris-xxl);margin-bottom:12px"><div class="ri-l">Identifiant</div><div class="ri-v m">${uid}</div></div>`;
-
+  </div><div class="recap">`;
   traps.forEach(trap=>{
-    const name=trap.type?'Piege '+trap.num+' - '+trapShortName(trap.type):'Piege '+trap.num;
-    const aH=trap.asian>0, nH=trap.nid!=='Non';
+    const name=trap.type?'Piège '+trap.num+' — '+trapShortName(trap.type):'Piège '+trap.num;
+    const aH=trap.asian>0;
     html+=`<div class="recap-trap">
       <div class="recap-trap-head"><span class="trap-badge">#${trap.num}</span><span class="trap-name">${name}</span></div>
       <div class="recap-grid">
         <div class="ri full"><div class="ri-l">Type</div><div class="ri-v">${trap.type||'-'}</div></div>
         <div class="ri ab"><div class="ri-l">Date de pose</div><div class="ri-v m">${trap.dateInstall||'-'}</div></div>
         <div class="ri ab"><div class="ri-l">Date de retrait</div><div class="ri-v m">${trap.dateReleve||'-'}</div></div>
-        ${trap.lat&&trap.lon?`<div class="ri full"><div class="ri-l">GPS</div><div class="ri-v m">${trap.lat}, ${trap.lon}${trap.osmLink?' <a href="'+trap.osmLink+'" target="_blank" class="osm-link" style="margin-left:8px">OSM</a>':''}</div></div>`:''}
+        ${trap.lat&&trap.lon?`<div class="ri full"><div class="ri-l">Position</div><div class="ri-v m">${trap.lat}, ${trap.lon}${trap.osmLink?' <a href="'+trap.osmLink+'" target="_blank" class="osm-link" style="margin-left:8px">Voir sur carte</a>':''}</div></div>`:''}
         <div class="ri"><div class="ri-l">Sur rucher</div><div class="ri-v">${trap.rucher}</div></div>
-        <div class="ri"><div class="ri-l">Appat(s)</div><div class="ri-v">${trap.appat.length?trap.appat.map(a=>a.split('+')[0].trim()).join(', '):'-'}</div></div>
-        <div class="ri ${aH?'ar':'av'}"><div class="ri-l">V. velutina</div><div class="ri-v m">${trap.asian}</div></div>
-        <div class="ri ab"><div class="ri-l">V. crabro</div><div class="ri-v m">${trap.euro}</div></div>
-        <div class="ri ag"><div class="ri-l">Autres</div><div class="ri-v m">${trap.others}</div></div>
-        <div class="ri ${nH?'ar':''} full"><div class="ri-l">Nid primaire</div><div class="ri-v">${trap.nid}</div></div>
+        <div class="ri"><div class="ri-l">Appât(s)</div><div class="ri-v">${trap.appat.length?trap.appat.map(a=>a.split('+')[0].trim()).join(', '):'-'}</div></div>
+        <div class="ri ${aH?'ar':'av'}"><div class="ri-l">Frelon asiatique</div><div class="ri-v m">${trap.asian}</div></div>
+        <div class="ri ab"><div class="ri-l">Frelon européen</div><div class="ri-v m">${trap.euro}</div></div>
+        <div class="ri ag"><div class="ri-l">Autres insectes</div><div class="ri-v m">${trap.others}</div></div>
         ${trap.notes?`<div class="ri full"><div class="ri-l">Notes</div><div class="ri-v">${trap.notes}</div></div>`:''}
       </div>
     </div>`;
@@ -1012,8 +880,8 @@ function buildRecap() {
 }
 
 // ENVOI
-async function sendData() {
-  syncCaptures();
+async function sendData(){
+  syncTraps();
   const commune=document.getElementById('commune').value.trim();
   const cp=document.getElementById('cp').value.trim();
   const adresse=document.getElementById('adresse').value.trim();
@@ -1022,49 +890,45 @@ async function sendData() {
   const prenom=document.getElementById('prenom').value.trim();
   const nom=document.getElementById('nom').value.trim();
   const tel=document.getElementById('tel').value.trim();
-  const uid=localStorage.getItem(ID_KEY)||'-';
-  const siteOsm=document.getElementById('osm-link-container').style.display!=='none'?document.getElementById('osm-link').href:'';
   showOv('loading');
-  try {
+  try{
     await Promise.all(traps.map(trap=>{
       const fd=new FormData();
-      fd.append('uid',uid); fd.append('prenom',prenom); fd.append('nom',nom); fd.append('tel',tel);
-      fd.append('adresse',adresse); fd.append('commune',commune); fd.append('cp',cp); fd.append('dept',dept); fd.append('lieu',lieu);
-      fd.append('dateInstall',trap.dateInstall||''); fd.append('dateReleve',trap.dateReleve||'');
-      fd.append('lat',trap.lat||''); fd.append('lon',trap.lon||''); fd.append('osmLink',trap.osmLink||siteOsm);
-      fd.append('trapNum',trap.num); fd.append('typePiege',trap.type); fd.append('rucher',trap.rucher);
+      fd.append('prenom',prenom);fd.append('nom',nom);fd.append('tel',tel);
+      fd.append('adresse',adresse);fd.append('commune',commune);fd.append('cp',cp);fd.append('dept',dept);fd.append('lieu',lieu);
+      fd.append('dateInstall',trap.dateInstall||'');fd.append('dateReleve',trap.dateReleve||'');
+      fd.append('lat',trap.lat||'');fd.append('lon',trap.lon||'');fd.append('osmLink',trap.osmLink||'');
+      fd.append('trapNum',trap.num);fd.append('typePiege',trap.type);fd.append('rucher',trap.rucher);
       fd.append('appat',trap.appat.join(' | ')||'-');
-      fd.append('asian',trap.asian); fd.append('euro',trap.euro); fd.append('others',trap.others);
-      fd.append('nid',trap.nid); fd.append('notes',trap.notes);
+      fd.append('asian',trap.asian);fd.append('euro',trap.euro);fd.append('others',trap.others);
+      fd.append('notes',trap.notes);
       fd.append('horodatage',new Date().toISOString());
       return fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:fd});
     }));
     showOv('success');
-  } catch(err){showOv('error',err.message);}
+  }catch(err){showOv('error',err.message);}
 }
 
 function showOv(state,msg){
-  const ov=document.getElementById('ov'), card=document.getElementById('ov-card');
+  const ov=document.getElementById('ov'),card=document.getElementById('ov-card');
   ov.classList.add('on');
   const n=traps.length;
-  if(state==='loading') card.innerHTML=`<div class="spin"></div><h3>Transmission en cours</h3><p>Envoi de ${n} releve${n>1?'s':''} vers Google Sheets...</p>`;
-  else if(state==='success') card.innerHTML=`<svg class="ov-ico" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--vert)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h3>${n>1?n+' releves transmis':'Releve transmis'}</h3><p>Donnees enregistrees dans Google Sheets.</p><button class="ov-btn" onclick="closeOv()">Nouvelle saisie</button>`;
-  else card.innerHTML=`<svg class="ov-ico" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--rouge)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><h3>Erreur de transmission</h3><p>Verifiez votre connexion.<br><small style="font-family:var(--mono);opacity:.5">${msg||''}</small></p><button class="ov-btn err" onclick="document.getElementById('ov').classList.remove('on')">Fermer</button>`;
+  if(state==='loading')card.innerHTML=`<div class="spin"></div><h3>Transmission en cours</h3><p>Envoi de ${n} relevé${n>1?'s':''} vers Google Sheets…</p>`;
+  else if(state==='success')card.innerHTML=`<svg class="ov-ico" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--vert)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h3>${n>1?n+' relevés transmis':'Relevé transmis'}</h3><p>Données enregistrées dans Google Sheets.</p><button class="ov-btn" onclick="closeOv()">Nouvelle saisie</button>`;
+  else card.innerHTML=`<svg class="ov-ico" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--rouge)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><h3>Erreur de transmission</h3><p>Vérifiez votre connexion.<br><small style="font-family:var(--mono);opacity:.5">${msg||''}</small></p><button class="ov-btn err" onclick="document.getElementById('ov').classList.remove('on')">Fermer</button>`;
 }
 
 function closeOv(){document.getElementById('ov').classList.remove('on');resetForm();}
 
 function resetForm(){
-  ['commune','cp','adresse','lat','lon','lieu','prenom','nom','tel'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  ['commune','cp','adresse','lieu','prenom','nom','tel'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
   document.getElementById('dept').value='';
-  document.getElementById('gps-msg').className='loc-msg';
-  document.getElementById('osm-link-container').style.display='none';
-  traps=[]; trapCounter=0; addTrap(); goTo(1);
+  traps=[];trapCounter=0;addTrap();goTo(1);
 }
 
 function toast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('on');
+  t.textContent=msg;t.classList.add('on');
   setTimeout(()=>t.classList.remove('on'),3200);
 }
 </script>
